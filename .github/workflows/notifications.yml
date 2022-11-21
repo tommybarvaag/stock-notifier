@@ -1,0 +1,12 @@
+name: Notifications
+on:
+  schedule:
+    - cron: "*/60 * * * *"
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call notify API endpoint
+        run: |
+          curl --request POST \
+          --url 'https://stock-notifier.vercel.app/api/notification/notify'
