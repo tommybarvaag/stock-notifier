@@ -9,4 +9,4 @@ jobs:
       - name: Call notify API endpoint
         run: |
           curl --request POST \
-          --url 'https://stock-notifier.vercel.app/api/notification/notify'
+          --url 'https://stock-notifier-five.vercel.app/api/notification/notify'
