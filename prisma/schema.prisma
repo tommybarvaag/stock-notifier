@@ -69,13 +69,16 @@ model VerificationToken {
 }
 
 model Notification {
-  id         String    @id @default(cuid())
-  type       String
-  sku        String
-  url        String
-  notified   Boolean   @default(false)
-  notifiedAt DateTime?
-  createdAt  DateTime  @default(now())
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
+  id          String    @id @default(cuid())
+  type        String
+  sku         String
+  url         String
+  imageUrl    String?
+  title       String?
+  description String?
+  notified    Boolean   @default(false)
+  notifiedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
 }

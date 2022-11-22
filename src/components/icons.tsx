@@ -9,6 +9,7 @@ import {
   Icon as LucideIcon,
   Image,
   LayoutDashboard,
+  Link,
   Loader2,
   MoreVertical,
   PartyPopper,
@@ -41,4 +42,5 @@ export const Icons = {
   BellRing,
   LayoutDashboard,
   Frown,
+  Link,
 };

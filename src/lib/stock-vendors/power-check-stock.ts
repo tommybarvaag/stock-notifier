@@ -79,7 +79,7 @@ type PowerStockProps = {
 
 const checkPowerStock = async (sku: string) => {
   const fetchedData = await fetch(
-    `https://www.power.no/api/v2/products?ids=${sku}&allowWebStatus8=true`,
+    `${process.env.NEXT_PUBLIC_POWER_API_BASE_URL}/api/v2/products?ids=${sku}&allowWebStatus8=true`,
     {}
   );
 
@@ -88,4 +88,8 @@ const checkPowerStock = async (sku: string) => {
   return data?.find((item) => item.productId === parseInt(sku, 10));
 };
 
-export { checkPowerStock };
+const generatePowerProductUrl = (url: string) => {
+  return `${process.env.NEXT_PUBLIC_POWER_BASE_URL}${url}`;
+};
+
+export { checkPowerStock, generatePowerProductUrl };

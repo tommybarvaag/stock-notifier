@@ -2,9 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import * as z from "zod";
 
 import { withMethods } from "@/lib/api-middleware/with-methods";
-import { checkPowerStock } from "@/lib/check-stock";
 import { db } from "@/lib/db";
 import sendgridMail from "@/lib/sendgrid";
+import {
+  checkPowerStock,
+  generatePowerProductUrl,
+} from "@/lib/stock-vendors/power-check-stock";
 import { getNotificationEmailTemplate } from "@/utils/notification-email";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -28,9 +31,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "POST") {
     const notifications = await db.notification.findMany({
-      where: {
-        notified: false,
-      },
       include: {
         user: true,
       },
@@ -45,7 +45,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }
 
       const stock = await checkPowerStock(notification.sku);
-      if (notification.user?.email && stock && stock.stockCount > 0) {
+
+      if (
+        !notification.notified &&
+        notification.user?.email &&
+        stock &&
+        (stock.stockCount > 0 || stock.stockDeliveryDateConfirmed)
+      ) {
         // Send notification
         const sendMailResponse = await sendgridMail.send({
           to: notification.user.email,
@@ -54,7 +60,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           html: getNotificationEmailTemplate(
             notification.user.name ?? "Ukjent",
             stock.title,
-            `https://www.power.no${stock.url}`
+            generatePowerProductUrl(stock.url)
           ),
         });
 

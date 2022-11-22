@@ -6,8 +6,8 @@ export default function DashboardSettingsLoading() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="RSVP"
-        text="Meld deg og din familie på navnefesten til Helene og Ulrik."
+        heading="Notifications"
+        text="Your saved notifications will be listed here"
       />
       <div className="grid gap-10">
         <Card.Skeleton />

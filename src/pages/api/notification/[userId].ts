@@ -6,6 +6,7 @@ import { withAuthentication } from "@/lib/api-middleware/with-authentication";
 import { withMethods } from "@/lib/api-middleware/with-methods";
 import { withUser } from "@/lib/api-middleware/with-user";
 import { db } from "@/lib/db";
+import { checkPowerStock } from "@/lib/stock-vendors/power-check-stock";
 import { notificationSchema } from "@/lib/validations/notification";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -22,6 +23,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
       const payload = notificationSchema.parse(body);
 
+      const stock = await checkPowerStock(payload.sku);
+
       if (payload.id) {
         await db.notification.update({
           where: {
@@ -30,6 +33,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           data: {
             url: payload.url,
             sku: payload.sku,
+            imageUrl: stock?.primaryImage2,
+            title: stock?.title,
+            description: stock?.shortDescription,
           },
         });
       } else {
@@ -39,6 +45,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             url: payload.url,
             userId: user.id,
             type: "price-drop",
+            imageUrl: stock?.primaryImage2,
+            title: stock?.title,
+            description: stock?.shortDescription,
           },
         });
       }

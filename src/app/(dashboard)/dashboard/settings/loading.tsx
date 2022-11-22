@@ -8,7 +8,7 @@ export default function DashboardSettingsLoading() {
     <DashboardShell>
       <DashboardHeader
         heading={STRING_CONSTANTS.HEADINGS.SETTINGS}
-        text="Administrer kontoen din."
+        text="Administrate your account"
       />
       <div className="grid gap-10">
         <Card.Skeleton />
