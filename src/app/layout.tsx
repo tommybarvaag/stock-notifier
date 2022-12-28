@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toast";
 import "@/styles/globals.css";
 
 interface RootLayoutProps {
@@ -9,6 +10,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <head />
       <body className="min-h-screen bg-white text-black">{children}</body>
+      <Toaster position="bottom-right" />
     </html>
   );
 }

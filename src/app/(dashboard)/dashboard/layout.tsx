@@ -1,6 +1,5 @@
 import { DashboardBranding } from "@/components/dashboard-branding";
 import { DashboardNav } from "@/components/dashboard-nav";
-import { Toaster } from "@/components/ui/toast";
 import { UserAccountNav } from "@/components/user-account-nav";
 import { authOptions } from "@/lib/auth";
 import { getCurrentUser } from "@/lib/session";
@@ -41,7 +40,6 @@ export default async function DashboardLayout({
           {children}
         </main>
       </div>
-      <Toaster position="bottom-right" />
     </>
   );
 }
