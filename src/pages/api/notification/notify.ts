@@ -39,7 +39,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
-    let notificationsToProcess = notifications.length;
+    const notificationsToProcess = notifications.length;
     let notificationsProcessed = 0;
     let notificationsSent = 0;
 
