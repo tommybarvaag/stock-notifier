@@ -3,11 +3,11 @@ import { DashboardShell } from "@/components/dashboard-shell";
 import { UserNameForm } from "@/components/user-name-form";
 import { STRING_CONSTANTS } from "@/constants/stringConstants";
 import { authOptions } from "@/lib/auth";
-import { getUser } from "@/utils/userUtils";
+import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export default async function SettingsPage() {
-  const user = await getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect(authOptions.pages?.signIn ?? "/");

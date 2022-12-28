@@ -2,13 +2,13 @@ import { DashboardHeader } from "@/components/dashboard-header";
 import { DashboardShell } from "@/components/dashboard-shell";
 import { UserNotificationForm } from "@/components/user-notification-form";
 import { authOptions } from "@/lib/auth";
-import { getUser } from "@/utils/userUtils";
+import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
 export default async function NewNotificationPage() {
-  const user = await getUser();
+  const user = await getCurrentUser();
 
   if (!user) {
     redirect(authOptions.pages?.signIn ?? "/");
