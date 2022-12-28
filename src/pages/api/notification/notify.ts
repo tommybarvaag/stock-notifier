@@ -31,6 +31,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (req.method === "POST") {
     const notifications = await db.notification.findMany({
+      where: {
+        notified: false,
+      },
       include: {
         user: true,
       },
