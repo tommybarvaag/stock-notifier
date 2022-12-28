@@ -36,6 +36,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       },
     });
 
+    let notificationsToProcess = notifications.length;
+    let notificationsProcessed = 0;
+    let notificationsSent = 0;
+
     // async for loop
     for (let i = 0; i < notifications.length; i++) {
       const notification = notifications[i];
@@ -67,6 +71,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         // Log notification sent
         if (sendMailResponse?.[0]?.statusCode === 202) {
           console.info("Notification sent");
+          notificationsSent++;
           await db.notification.update({
             data: {
               notified: true,
@@ -78,9 +83,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           });
         }
       }
+
+      notificationsProcessed++;
     }
 
-    return res.status(200).end();
+    return res
+      .status(200)
+      .end(
+        `Of ${notificationsToProcess} notifications, ${notificationsProcessed} were processed and ${notificationsSent} were sent.`
+      );
   }
 }
 
